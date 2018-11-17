@@ -16,3 +16,19 @@ graph rather than its nodes.
 ```
 pip install -r requirements.txt
 ```
+
+## Example Use
+
+The running default `main()` function:
+```
+python disparity.py
+```
+
+Will generate a random graph (using a seed) of 100 nodes, then prune
+all edges below the 80th percentile for the disparity measure and
+prune all nodes with degree < 2:
+```
+G: 100 nodes 489 edges
+filter:	      min disparity cutoff 0.5472, min degree 2
+G: 86 nodes 210 edges
+```
