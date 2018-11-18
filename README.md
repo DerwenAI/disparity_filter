@@ -39,5 +39,4 @@ G: 86 nodes 210 edges
 
 ## Contributors
 
-Please use the `Issues` section to ask questions or report problems, and be sure to sign the CLA prior to submitting a PR:
-<iframe id="e-sign-process" src="http://contributoragreements.org/u2s/222mlog137" width="100%" height="100%"></iframe>
+Please use the `Issues` section to ask questions or report problems, and be sure to sign the [CLA](http://contributoragreements.org/u2s/222mlog137) before submitting a PR.
