@@ -87,7 +87,7 @@ def disparity_filter (graph):
 
     for id0, id1 in graph.edges():
         edge = graph[id0][id1]
-        edge["disp_ptile"] = percentileofscore(disp_metrics, edge["disparity"]) / 100.0
+        edge["alpha_ptile"] = percentileofscore(disp_metrics, edge["disparity"]) / 100.0
 
     return disp_metrics
 
@@ -135,34 +135,33 @@ def calc_quantiles (metrics, num):
     return quantiles
 
 
-def calc_cutoff (disp_metrics, p=0.5):
+def calc_alpha_ptile (disp_metrics, show=True):
     """
-    use the quantiles to define a threshold cutoff
+    calculate the quantiles used to define a threshold alpha cutoff
     """
-    global DEBUG
-
-    quantiles = calc_quantiles(disp_metrics, num=100)
+    quantiles = calc_quantiles(disp_metrics, num=10)
     num_quant = len(quantiles)
 
-    if DEBUG:
+    if show:
+        print("\tptile\talpha")
+
         for i in range(num_quant):
             percentile = i / float(num_quant)
             print("\t{:0.2f}\t{:0.4f}".format(percentile, quantiles[i]))
 
-    cutoff = quantiles[round(len(quantiles) * p)]
-    return cutoff
+    return quantiles, num_quant
 
 
-def apply_cutoff (graph, cutoff, min_degree=1):
+def cut_graph (graph, min_alpha_ptile=0.5, min_degree=2):
     """
-    apply the disparity filter
+    apply the disparity filter to cut the given graph
     """
     filtered_set = set([])
 
     for id0, id1 in graph.edges():
         edge = graph[id0][id1]
 
-        if edge["disp_ptile"] < cutoff:
+        if edge["alpha_ptile"] < min_alpha_ptile:
             filtered_set.add((id0, id1))
 
     for id0, id1 in filtered_set:
@@ -270,13 +269,13 @@ def describe_graph (graph, min_degree=1, show_centrality=False):
     """
     describe a graph
     """
-    print("G: {} nodes {} edges".format(len(graph.nodes()), len(graph.edges())))
+    print("\nG: {} nodes {} edges\n".format(len(graph.nodes()), len(graph.edges())))
 
     if show_centrality:
         print(calc_centrality(graph, min_degree))
 
 
-def main (n=100, k=10, p=0.80, min_degree=2):
+def main (n=100, k=10, min_alpha_ptile=0.5, min_degree=2):
     # generate a random graph (from seed, always the same)
     graph = random_graph(n, k)
 
@@ -285,12 +284,15 @@ def main (n=100, k=10, p=0.80, min_degree=2):
 
     # calculate the multiscale backbone metrics
     disp_metrics = disparity_filter(graph)
-    cutoff = calc_cutoff(disp_metrics, p)
+    quantiles, num_quant = calc_alpha_ptile(disp_metrics)
+    alpha_cutoff = quantiles[round(num_quant * min_alpha_ptile)]
 
-    print("filter:\t min disparity cutoff {:0.4f}, min degree {}".format(cutoff, min_degree))
+    print("\nfilter: percentile {:0.2f}, min alpha {:0.4f}, min degree {}".format(
+            min_alpha_ptile, alpha_cutoff, min_degree
+            ))
 
-    # apply the filter to prune the graph
-    apply_cutoff(graph, cutoff, min_degree)
+    # apply the filter to cut the graph
+    cut_graph(graph, min_alpha_ptile, min_degree)
 
     save_graph(graph, "h.json")
     describe_graph(graph, min_degree)
