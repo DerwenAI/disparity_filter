@@ -24,7 +24,7 @@ problem typically faced in social networks. By managing cuts through a
 process of iterating between measures of *centrality* and *disparity*
 respectively, one can scale a large, noisy graph into something more
 amenable for work with ontology -- especially as a way to clean up
-input for a neural network.
+input for neural networks.
 
 The code expects each *node* to have a required *label* attribute,
 which is a string unique within all of the nodes in the graph. Each
@@ -36,7 +36,7 @@ After calculating the disparity metrics, each node get assigned a
 *strength* attribute, which is the sum of its edges' weights. Each
 edge gets assigned the following attributes:
 
-  * *norm_weight*: ratio of the `edge[weight] / node[strength]`
+  * *norm_weight*: ratio of the `edge[weight]/source_node[strength]`
   * *alpha*: disparity *alpha* metric
   * *alpha_ptile*: percentile for *alpha*, compared across the graph
 
