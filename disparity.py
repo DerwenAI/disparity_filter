@@ -52,7 +52,7 @@ def disparity_filter (graph):
     implements a disparity filter, based on multiscale backbone networks
     https://arxiv.org/pdf/0904.2389.pdf
     """
-    disp_metrics = []
+    alpha_measures = []
     
     for node_id in graph.nodes():
         node = graph.node[node_id]
@@ -76,20 +76,20 @@ def disparity_filter (graph):
                     if norm_weight == 1.0:
                         norm_weight -= 0.0001
 
-                    disparity = get_disparity_significance(norm_weight, degree)
+                    alpha = get_disparity_significance(norm_weight, degree)
                 except AssertionError:
                     report_error("disparity {}".format(repr(node)), fatal=True)
 
-                edge["disparity"] = disparity
-                disp_metrics.append(disparity)
+                edge["alpha"] = alpha
+                alpha_measures.append(alpha)
             else:
-                edge["disparity"] = 0.0
+                edge["alpha"] = 0.0
 
     for id0, id1 in graph.edges():
         edge = graph[id0][id1]
-        edge["alpha_ptile"] = percentileofscore(disp_metrics, edge["disparity"]) / 100.0
+        edge["alpha_ptile"] = percentileofscore(alpha_measures, edge["alpha"]) / 100.0
 
-    return disp_metrics
+    return alpha_measures
 
 
 ######################################################################
@@ -135,11 +135,11 @@ def calc_quantiles (metrics, num):
     return quantiles
 
 
-def calc_alpha_ptile (disp_metrics, show=True):
+def calc_alpha_ptile (alpha_measures, show=True):
     """
     calculate the quantiles used to define a threshold alpha cutoff
     """
-    quantiles = calc_quantiles(disp_metrics, num=10)
+    quantiles = calc_quantiles(alpha_measures, num=10)
     num_quant = len(quantiles)
 
     if show:
@@ -269,7 +269,7 @@ def describe_graph (graph, min_degree=1, show_centrality=False):
     """
     describe a graph
     """
-    print("\nG: {} nodes {} edges\n".format(len(graph.nodes()), len(graph.edges())))
+    print("\ngraph: {} nodes {} edges\n".format(len(graph.nodes()), len(graph.edges())))
 
     if show_centrality:
         print(calc_centrality(graph, min_degree))
@@ -283,8 +283,8 @@ def main (n=100, k=10, min_alpha_ptile=0.5, min_degree=2):
     describe_graph(graph, min_degree)
 
     # calculate the multiscale backbone metrics
-    disp_metrics = disparity_filter(graph)
-    quantiles, num_quant = calc_alpha_ptile(disp_metrics)
+    alpha_measures = disparity_filter(graph)
+    quantiles, num_quant = calc_alpha_ptile(alpha_measures)
     alpha_cutoff = quantiles[round(num_quant * min_alpha_ptile)]
 
     print("\nfilter: percentile {:0.2f}, min alpha {:0.4f}, min degree {}".format(
