@@ -10,6 +10,10 @@ https://arxiv.org/pdf/0904.2389.pdf
 Think of this as if it were "centrality" calculated on the edges of a
 graph rather than its nodes.
 
+Similar to:
+
+  * https://github.com/aekpalakorn/python-backbone-network
+
 
 ## Getting Started
 
@@ -32,3 +36,8 @@ G: 100 nodes 489 edges
 filter:	      min disparity cutoff 0.5472, min degree 2
 G: 86 nodes 210 edges
 ```
+
+## Contributors
+
+Please use the `Issues` section to ask questions or report problems, and be sure to sign the CLA prior to submitting a PR:
+<iframe id="e-sign-process" src="http://contributoragreements.org/u2s/222mlog137" width="100%" height="100%"></iframe>
