@@ -26,19 +26,19 @@ respectively, one can scale a large, noisy graph into something more
 amenable for work with ontology -- especially as a way to clean up
 input for neural networks.
 
-The code expects each *node* to have a required *label* attribute,
+The code expects each *node* to have a required `label` attribute,
 which is a string unique within all of the nodes in the graph. Each
-*edge* is expected to have a *weight* attribute, a decimal in the
+*edge* is expected to have a `weight` attribute, a decimal in the
 range of `[0.0, 1.0]` which represents the relative weight of that
 edge's relationship.
 
 After calculating the disparity metrics, each node get assigned a
-*strength* attribute, which is the sum of its edges' weights. Each
-edge gets assigned the following attributes:
+`strength` attribute, which is the sum of its outbound edges'
+weights. Each edge gets assigned the following attributes:
 
-  * *norm_weight*: ratio of the `edge[weight]/source_node[strength]`
-  * *alpha*: disparity *alpha* metric
-  * *alpha_ptile*: percentile for *alpha*, compared across the graph
+  * `norm_weight`: ratio of the `edge[weight]/source_node[strength]`
+  * `alpha`: disparity *alpha* metric
+  * `alpha_ptile`: percentile for *alpha*, compared across the graph
 
 One important distinction is that this implementation comes from work
 in NLP and ontology, where graphs tend to become relatively "noisy"
