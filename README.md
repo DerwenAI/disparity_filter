@@ -21,21 +21,29 @@ Similar to:
 pip install -r requirements.txt
 ```
 
-## Example Use
+## Example
 
 The running default `main()` function:
 ```
 python disparity.py
 ```
 
-Will generate a random graph (using a seed) of 100 nodes, then prune
-all edges below the 80th percentile for the disparity measure and
-prune all nodes with degree < 2:
+That will:
+
+  1. generate a random graph (using a seed) of 100 nodes, each with < 10 edges
+  2. calculate the significance (alpha) for the disparity filter
+  3. calculate quantiles for alpha
+  4. cut edges below the 80th percentile for alpha
+  5. cut nodes with degree < 2
+
 ```
 G: 100 nodes 489 edges
-filter:	      min disparity cutoff 0.5472, min degree 2
+filter:	min alpha 0.5472, min degree 2
 G: 86 nodes 210 edges
 ```
+
+In practice, adjust those thresholds as needed before making a cut on a graph.
+This mechanism provides a "dial" to scale the multiscale backbone of the graph.
 
 ## Contributors
 
