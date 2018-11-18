@@ -19,11 +19,12 @@ This project is similar to, albeit providing different features than:
 
 If you are new to *multiscale backbone* analysis, think of this as
 analogous to *centrality* calculated on the edges of a graph rather
-than its nodes. In other words, as a "dual" of the problem typically
-faced in social networks. By managing cuts through a process of
-iterating between measures of *centrality* and *disparity*
+than its nodes. In other words, consider this as a "dual" of the
+problem typically faced in social networks. By managing cuts through a
+process of iterating between measures of *centrality* and *disparity*
 respectively, one can scale a large, noisy graph into something more
-amenable for work with ontology.
+amenable for work with ontology -- especially as a way to clean up
+input for a neural network.
 
 The code expects each *node* to have a required *label* attribute,
 which is a string unique within all of the nodes in the graph. Each
