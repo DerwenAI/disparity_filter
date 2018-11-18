@@ -13,9 +13,7 @@ import pstats
 import random
 import sys
 
-
 DEBUG = False # True
-GRANULARITY = 100
 
 
 ######################################################################
