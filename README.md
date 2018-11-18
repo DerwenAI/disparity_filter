@@ -36,7 +36,7 @@ That will:
   1. generate a random graph (using a seed) of 100 nodes, each with < 10 edges
   2. calculate the significance (*alpha*) for the disparity filter
   3. calculate quantiles for *alpha*
-  4. cut edges below the 80th percentile for *alpha*
+  4. cut edges below the 50th percentile (median) for *alpha*
   5. cut nodes with degree < 2
 
 ```
