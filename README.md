@@ -112,5 +112,3 @@ multiscale backbone of the graph.
 ## Contributors
 
 Please use the `Issues` section to ask questions or report any problems.
-Before submitting a *pull request* be sure to sign the
-[CLA](http://contributoragreements.org/u2s/222mlog137).
