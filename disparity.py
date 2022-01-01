@@ -55,7 +55,7 @@ def disparity_filter (graph):
     alpha_measures = []
     
     for node_id in graph.nodes():
-        node = graph.node[node_id]
+        node = graph.nodes[node_id]
         degree = graph.degree(node_id)
         strength = 0.0
 
@@ -170,7 +170,7 @@ def cut_graph (graph, min_alpha_ptile=0.5, min_degree=2):
     filtered_set = set([])
 
     for node_id in graph.nodes():
-        node = graph.node[node_id]
+        node = graph.nodes[node_id]
 
         if graph.degree(node_id) < min_degree:
             filtered_set.add(node_id)
