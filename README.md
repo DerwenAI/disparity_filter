@@ -66,17 +66,21 @@ with semantics and ontologies.
 ## Getting Started
 
 ```
-pip install -r requirements.txt
+python3 -m venv venv
+source venv/bin/activate
+
+python3 -m pip install -U pip wheel
+python3 -m pip install -r requirements.txt
 ```
 
 ## Example
 
 The running default `main()` function:
 ```
-python disparity.py
+python3 disparity.py
 ```
 
-That will:
+This will:
 
   1. generate a random graph (using a seed) of 100 nodes, each with < 10 edges
   2. calculate the significance (*alpha*) for the disparity filter
@@ -87,17 +91,17 @@ That will:
 ```
 graph: 100 nodes 489 edges
 
-   ptile     alpha
-   0.00	     0.0000
-   0.10	     0.0305
-   0.20	     0.0624
-   0.30	     0.1027
-   0.40	     0.1512
-   0.50	     0.2159
-   0.60	     0.3222
-   0.70	     0.4821
-   0.80	     0.7102
-   0.90	     0.9998
+	ptile	alpha
+	0.00	0.0000
+	0.10	0.0305
+	0.20	0.0624
+	0.30	0.1027
+	0.40	0.1512
+	0.50	0.2159
+	0.60	0.3222
+	0.70	0.4821
+	0.80	0.7102
+	0.90	0.9998
 
 filter: percentile 0.50, min alpha 0.2159, min degree 2
 
