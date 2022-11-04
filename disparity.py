@@ -31,20 +31,11 @@ def get_nes (graph, label):
             return set([node_id]).union(set([id for id in graph.neighbors(node_id)]))
 
 
-def disparity_integral (x, k):
-    """
-    calculate the definite integral for the PDF in the disparity filter
-    """
-    assert x != 1.0, "x == 1.0"
-    assert k != 1.0, "k == 1.0"
-    return ((1.0 - x)**k) / ((k - 1.0) * (x - 1.0))
-
-
 def get_disparity_significance (norm_weight, degree):
     """
     calculate the significance (alpha) for the disparity filter
     """
-    return 1.0 - ((degree - 1.0) * (disparity_integral(norm_weight, degree) - disparity_integral(0.0, degree)))
+    return (1.0 - norm_weight)**(degree - 1.0)
 
 
 def disparity_filter (graph):
